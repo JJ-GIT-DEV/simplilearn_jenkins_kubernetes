@@ -9,7 +9,10 @@ This description shows how Jenkins can be used to deploy and roll out Wordpress 
 
 
 1. install the kubernetes plugin in jenkins
+1.1 install kubernetes plugin
 ![install the plugin in jenkins](image.png "plugin installation kubernetes")
+1.1 install kubernetes CLI plugin
+![kubernetes CLI plugin](image-9.png)
 
 2. create new connection to a cloud in jenkins
 ![create connection to a cloud](image-1.png)

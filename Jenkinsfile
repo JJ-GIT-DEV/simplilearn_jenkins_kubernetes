@@ -1,7 +1,15 @@
 
 pipeline {
 
-  agent any
+  agent {
+
+    kubernetes {
+
+      label 'local_kubernetes'
+
+    }
+
+  }
 
   stages {
 
@@ -14,11 +22,23 @@ pipeline {
     stage('Deploy in kube wordpress') {
       steps {
         script {
-          kubernetesDeploy(configs: "kubedeploy.yml", kubeconfigId: "mykubeconfig")
+          // kubernetesDeploy(configs: "kubedeploy.yml", kubeconfigId: "mykubeconfig")
+          withKubeConfig ([credentialsId: 'local_cluster_k8s'])
+          {
+            sh 'kubectl create -f $WORKSPACE/kubedeploy.yml'
+          }
         }
       }
     }
-
   }
 
 }
+
+    stage('Deploying React.js container to Kubernetes') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "deployment.yaml", 
+                                         "service.yaml")
+        }
+      }
+    }
