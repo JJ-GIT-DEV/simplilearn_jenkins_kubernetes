@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    tools {
+        maven 'mymaven'
+    }
+    stages {
+        stage('Checkout code') {
+            steps {
+                git 'https://github.com/Sonal0409/DevOpsCodeDemo.git'
+            }
+        }
+        stage('Build Code') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+        stage('Build Image') {
+            steps {
+                sh 'cp /var/lib/jenkins/workspace/Node_Docker_Pipeline_Day6/target/addressbook.war .'
+                sh 'docker build -t tomcatimage:$BUILD_NUMBER .'
+            }
+        }
+
+        stage('Deploy to Container') {
+            steps {
+                sh 'docker run -d -P tomcatimage:$BUILD_NUMBER'
+            }
+        }
+    }
+}
