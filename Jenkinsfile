@@ -1,18 +1,12 @@
 
 pipeline {
-
   agent {
-
     kubernetes {
-
-      label 'local_kubernetes'
-
+      label 'kubernetes'
     }
-
   }
 
   stages {
-
     stage('Checkout Source') {
       steps {
         git url:'https://github.com/JJ-GIT-DEV/simplilearn_jenkins_kubernetes.git', branch:'main'
@@ -31,14 +25,4 @@ pipeline {
       }
     }
   }
-
 }
-
-    stage('Deploying React.js container to Kubernetes') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "deployment.yaml", 
-                                         "service.yaml")
-        }
-      }
-    }
