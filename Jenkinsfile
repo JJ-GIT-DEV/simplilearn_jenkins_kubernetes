@@ -16,11 +16,11 @@ pipeline {
     stage('Deploy in kube wordpress') {
       steps {
         script {
-          // kubernetesDeploy(configs: "kubedeploy.yml", kubeconfigId: "mykubeconfig")
-          withKubeConfig ([credentialsId: 'local_cluster_k8s'])
-          {
-            sh 'kubectl create -f $WORKSPACE/kubedeploy.yml'
-          }
+          kubernetesDeploy(configs: "kubedeploy.yml", kubeconfigId: "jenkins-local")
+          //withKubeConfig ([credentialsId: 'local_cluster_k8s'])
+          //{
+          //  sh 'kubectl create -f $WORKSPACE/kubedeploy.yml'
+          //}
         }
       }
     }
